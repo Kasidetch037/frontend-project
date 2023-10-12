@@ -1,0 +1,22 @@
+.navbar {
+  height: auto;
+  width: 100%;
+  box-shadow: 0 0 10px 5px rgb(0 0 0 / 0.1);
+  padding: 0px 20px;
+  box-sizing: border-box;
+  background-color: #242424;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 20px;
+
+  margin-bottom: 0;
+}
+
+.menu {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
