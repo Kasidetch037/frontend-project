@@ -1,45 +1,73 @@
-import classes from './PostDetail.module.css'
+// import { Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, Container, Grid, Stack, Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
+import usePost from '../hooks/usePost'
 import ReactPlayer from 'react-player'
-import ReactStars from 'react-stars'
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon'
 
-const PostDetail = () => {
+export default function PostDetail() {
+  const { id } = useParams()
+  const { post } = usePost(id || '1')
+
+  if (!post) return
+
   return (
-    <div className={classes.body}>
-      <div className={classes.postdetail}>
-        <div>
-          <h1>Video title</h1>
-          <p className={classes.poster}>poster</p>
-        </div>
+    <main>
+      <Container maxWidth="sm">
+        <Box sx={{ flexGrow: 1, pt: 10 }}>
+          <ReactPlayer url={post.videoUrl} controls />
 
-        <div>
-          <ReactPlayer url="https://www.youtube.com/watch?v=VmLEB0AGLcg" controls />
-        </div>
+          <Grid item xs={12} sm={6} md={4}>
+            <Stack direction="row" spacing={5} alignItems="center" pt={3}>
+              <InsertEmoticonIcon sx={{ fontSize: 60 }} color="primary" />
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', mt: 3, width: '100%' }}>
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {post.videoTitle}
+                  </Typography>
+                  <Typography>{post.comment}</Typography>
+                  <Typography color="#9e9e9e" align="right">
+                    {post.postedBy.username}
+                  </Typography>
+                </CardContent>
 
-        <div className={classes.commentBox}>
-          <div className="comment">
-            <div>Good</div>
-          </div>
-
-          <div className={classes.right}>
-            <div>
-              <ReactStars color2={'#ffd700'} />
-            </div>
-
-            <div>
-              <p>username</p>
-            </div>
-
-            <div>
-              <p>12/13/23</p>
-            </div>
-
-            <div>
-              <p>(Updated on 13/13/23)</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                <Box
+                  m={1}
+                  //margin
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="flex-end"
+                >
+                  <Button sx={{ height: 40 }}>Edit</Button>
+                </Box>
+              </Card>
+            </Stack>
+          </Grid>
+        </Box>
+      </Container>
+    </main>
   )
 }
-export default PostDetail
+
+{
+  /* <Grid item xs={12} sm={6} md={4}>
+        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <CardMedia
+            component="div"
+            sx={{
+              // 16:9
+              pt: '56.25%',
+            }}
+            image={post.thumbnailUrl}
+          />
+          <CardContent sx={{ flexGrow: 1 }}>
+            <Typography gutterBottom variant="h5" component="h2">
+              {post.videoTitle}
+            </Typography>
+            <Typography>{post.comment}</Typography>
+            <Typography color="#9e9e9e">{post.postedBy.username}</Typography>
+          </CardContent>
+          <CardActions></CardActions>
+        </Card>
+      </Grid> */
+}

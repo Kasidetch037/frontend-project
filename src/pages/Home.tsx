@@ -1,5 +1,5 @@
 import Content from '../components/Content'
-import usePosts from '../hooks/usePost'
+import usePosts from '../hooks/usePosts'
 import classes from './Home.module.css'
 
 const Home = () => {

@@ -1,5 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 import { ContentDTO } from '../types/dto'
+import { Link } from 'react-router-dom'
 
 interface IContentProps {
   content: ContentDTO
@@ -22,10 +23,17 @@ const Content = ({ content }: IContentProps) => {
             {content.videoTitle}
           </Typography>
           <Typography>{content.comment}</Typography>
+          <Typography color="#9e9e9e" align="right">
+            {content.postedBy.username}
+          </Typography>
         </CardContent>
         <CardActions>
-          <Button size="large">View</Button>
-          <Button size="large">Edit</Button>
+          <Link to={`/post/${content.id}`}>
+            <Button size="large">View</Button>
+          </Link>
+          <Link to={`/post/${content.id}`}>
+            <Button size="large">Edit</Button>
+          </Link>
         </CardActions>
       </Card>
     </Grid>
@@ -33,29 +41,6 @@ const Content = ({ content }: IContentProps) => {
 }
 
 export default Content
-
-{
-  /* <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <CardMedia
-                    component="div"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random?wallpapers"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>This is a media card. You can use this section to describe the content.</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
-                </Card> */
-}
 
 // import { ContentDTO } from '../types/dto'
 
@@ -74,15 +59,6 @@ export default Content
 //       </div>
 //     </>
 //   )
-// }
-
-// {
-//   /* <div>
-//           {posts &&
-//             posts.map((content) => {
-//               return <Content key={content.id} content={content} />
-//             })}
-//         </div> */
 // }
 
 // export default Content

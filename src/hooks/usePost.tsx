@@ -1,16 +1,17 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { ContentDTO, ContentsDTO } from '../types/dto'
+import { ContentDTO } from '../types/dto'
 
-const usePosts = () => {
-  const [posts, setPosts] = useState<ContentDTO[] | null>(null)
+const usePost = (id: string) => {
+  // เปลี่ยนจาก ContentDTO[] เป็น ContentDTO
+  const [post, setPost] = useState<ContentDTO | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get<ContentsDTO>('https://api.learnhub.thanayut.in.th/content')
+        const res = await axios.get<ContentDTO>(`https://api.learnhub.thanayut.in.th/content/${id}`)
 
-        setPosts(res.data.data)
+        setPost(res.data)
         console.log(res)
       } catch (err) {
         console.error(err)
@@ -18,8 +19,8 @@ const usePosts = () => {
     }
 
     fetchData()
-  }, [])
+  }, [id])
 
-  return { posts }
+  return { post }
 }
-export default usePosts
+export default usePost

@@ -42,7 +42,7 @@ export default function Create() {
           <Typography component="h1" variant="h5">
             Edit content
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, mb: 20 }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             {/* <TextField
               margin="normal"
               required
@@ -65,7 +65,7 @@ export default function Create() {
 
             {/* <ReactStars color2={'#ffd700'} /> */}
 
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 14 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
               Edit
             </Button>
           </Box>
