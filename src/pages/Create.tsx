@@ -7,18 +7,36 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import ReactStars from 'react-stars'
+import { useNavigate } from 'react-router-dom'
+import usePosts from '../hooks/usePosts'
+import { useState, FormEvent } from 'react'
+import toast from 'react-hot-toast'
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme()
 
 export default function Create() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+  const navigate = useNavigate()
+  const { createPost } = usePosts()
+  const [rating, setRating] = useState<number>(0)
+  const [url, setUrl] = useState<string>('')
+  const [comment, setComment] = useState<string>('')
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+
+    try {
+      await createPost({
+        videoUrl: url,
+        comment,
+        rating,
+      })
+      toast.success('Succesfully created!')
+      navigate('/')
+    } catch (err) {
+      if (err instanceof Error) toast.error(err.message)
+    }
   }
 
   return (
@@ -47,11 +65,11 @@ export default function Create() {
               margin="normal"
               required
               fullWidth
-              // id="email"
               label="Video URL"
-              // name="email"
-              // autoComplete="email"
               autoFocus
+              onChange={(e) => setUrl(e.target.value)}
+              //! ใส่ onSubmit={handleSubmit} ใน input
+              onSubmit={handleSubmit}
             />
             <TextField
               margin="normal"
@@ -59,23 +77,18 @@ export default function Create() {
               required
               rows={4}
               fullWidth
-              // name="password"
               label="Comment"
-              // type="password"
-              // id="password"
-              //!!! autoComplete="current-password"
+              onChange={(e) => setComment(e.target.value)}
+              onSubmit={handleSubmit}
             />
-            {/* <TextField
-              id="outlined-multiline-static"
-              margin="normal"
-              fullWidth
-              multiline
-              required
-              rows={4}
-              defaultValue="Default Value"
-            /> */}
-
-            {/* <ReactStars color2={'#ffd700'} /> */}
+            <ReactStars
+              count={5}
+              value={rating}
+              onChange={(rating: number) => setRating(rating)}
+              size={24}
+              color2={'#ffd700'}
+              half="false"
+            />
 
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 14 }}>
               Post
