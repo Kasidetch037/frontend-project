@@ -1,6 +1,9 @@
 import { AppBar, Button, CssBaseline, Link, Toolbar, Tooltip, Typography } from '@mui/material'
+import { useAuth } from '../providers/AuthProvider'
 
 const Navbar = () => {
+  const { isLoggedIn, username, logout } = useAuth()
+
   return (
     <>
       <CssBaseline />
@@ -19,34 +22,33 @@ const Navbar = () => {
             </Link>
           </Typography>
 
-          <nav>
-            <Link href="/create" color="inherit">
-              <Tooltip title="Upload" color="inherit">
-                <Button>Upload</Button>
+          {isLoggedIn ? <Button color="inherit">{username}</Button> : <Typography></Typography>}
+
+          {isLoggedIn ? (
+            <>
+              <nav>
+                <Link href="/create" color="inherit">
+                  <Tooltip title="Upload" color="inherit">
+                    <Button>Upload</Button>
+                  </Tooltip>
+                </Link>
+              </nav>
+              <Link href="/" color="inherit" border={1} borderRadius={3}>
+                <Tooltip title="Login" color="inherit" onClick={logout}>
+                  <Button>Log out</Button>
+                </Tooltip>
+              </Link>
+            </>
+          ) : (
+            <Link href="/login" color="inherit" border={1} borderRadius={3}>
+              <Tooltip title="Login" color="inherit">
+                <Button>Login</Button>
               </Tooltip>
             </Link>
-          </nav>
-          <nav>
-            <Link href="/register" color="inherit">
-              <Tooltip title="Register" color="inherit">
-                <Button>Register</Button>
-              </Tooltip>
-            </Link>
-          </nav>
-          <Link href="/login" color="inherit" border={1} borderRadius={3}>
-            <Tooltip title="Login" color="inherit">
-              <Button>Login</Button>
-            </Tooltip>
-          </Link>
+          )}
         </Toolbar>
       </AppBar>
     </>
   )
 }
 export default Navbar
-
-{
-  /* <Link variant="button" color="inherit" href="#" sx={{ my: 1, mx: 1.5 }} title="Register">
-              Register
-            </Link> */
-}
